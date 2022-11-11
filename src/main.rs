@@ -1,3 +1,3 @@
 fn main() {
-    println!("Au = OR[75]");
+    println!("Automate en rust par Au = OR[75]");
 }

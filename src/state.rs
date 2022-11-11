@@ -1,5 +1,7 @@
+use std::str::FromStr;
+
 //string n'implemente pas copy, donc on peut juste utiliser clone
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Hash, Eq)]
 pub struct State {
     name: String,
 }
@@ -28,6 +30,10 @@ impl State {
     ///
     pub fn new(_name : String) -> Self {
         State { name: _name }
+    }
+
+    pub fn from_str(_name : &str) -> Self {
+        State { name: String::from_str(_name).unwrap() }
     }
 
 
@@ -70,10 +76,10 @@ mod test {
     #[test]
     fn creation_partial_eq_copy() {      
         let string_one : String = String::from("state");
-        let string_two : String = String::from("state two");
+        let string_two : String = String::from("");
 
         let state_one : State = State::new(string_one.clone());
-        let state_one_bis : State = State::new(string_one.clone());
+        let state_one_bis : State = State::from_str(string_one.clone().as_str());
         let state_two : State = State::new(string_two);
         
         assert_eq!(state_one, state_one_bis);

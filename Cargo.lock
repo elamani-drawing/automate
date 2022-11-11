@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "automaton"
+name = "automate"
 version = "0.1.0"
