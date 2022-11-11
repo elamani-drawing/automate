@@ -3,9 +3,11 @@
 ## Description
 Implémentation d'automate en Rust.      
 Actuellement:       
-- **State**: Un état de l'automate.
-- **Symbol**: Un symbole de l'automate
-- **Transition**:  Une transition de l'automate.
+- [**State**](/src/state.rs): Un état de l'automate.
+- [**Symbol**](/src/symbol.rs): Un symbole de l'automate
+- [**Transition**](/src/transition.rs):  Une transition de l'automate.
+- [**FiniteStateMachine**](/src/fsm.rs): Une machine a état fini.
+- [**DeterministicFiniteAutomaton**](/src/dfa.rs):  Un automate déterministe a état fini.
 
 
 ## Démarage
