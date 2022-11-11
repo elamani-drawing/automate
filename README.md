@@ -8,6 +8,7 @@ Actuellement:
 - [**Transition**](/src/transition.rs):  Une transition de l'automate.
 - [**FiniteStateMachine**](/src/fsm.rs): Une machine a état fini.
 - [**DeterministicFiniteAutomaton**](/src/dfa.rs):  Un automate déterministe a état fini.
+- [**NonDeterministicFiniteAutomaton**](/src/nfa.rs):  Un automate non déterministe a état fini.
 
 
 ## Démarage

@@ -19,7 +19,7 @@ impl DeterministicFiniteAutomaton {
     ///
     /// * `_start` - L'état initial de l'automate
     /// * `_delta` - Une HashMap decrivant les differentes transition de l'automate
-    /// * `_fsm` - Une machine à état fini dérivant l'automate
+    /// * `_fsm` - Une machine à état fini décrivant l'automate
     ///
     /// # Examples
     /// 
@@ -90,7 +90,7 @@ impl DeterministicFiniteAutomaton {
     ///
     /// * `_start` - L'état initial de l'automate
     /// * `_delta` - Une HashMap decrivant les differentes transition de l'automate
-    /// * `_fsm` - Une machine à état fini dérivant l'automate
+    /// * `_fsm` - Une machine à état fini décrivant l'automate
     ///
     /// # Examples
     /// 
@@ -144,7 +144,7 @@ impl DeterministicFiniteAutomaton {
     /// * `DeterministicFiniteAutomaton` - L'automate déterministe à état fini correspondante
     /// 
     pub fn from_json(content_json: &Map<String, Value>) -> Self {
-        //creation de la machine à l'aide du content_json
+        //creation du DFA à l'aide du content_json
         let state_init :State = State::new(content_json.get("start").unwrap().to_string().replace("\"", ""));
         let mut symbol: Symbol;
         let mut state: State;
@@ -173,7 +173,8 @@ impl DeterministicFiniteAutomaton {
         let mut ends: HashSet<State> = HashSet::new();
         for elem in content_json.get("ends").unwrap().as_array().unwrap(){
             state = State::new(elem.to_string().replace("\"", ""));
-            ends.insert(state);
+            ends.insert(state.clone());
+            states.insert(state);
         }
         
         //on aurait pus directement utiliser l'interfasse de FiniteStateMachine pour enumerer les etat, l'alphabet etc. mais par precaution on le fait mannuellement par apport au contenu des transitions
@@ -192,7 +193,7 @@ impl DeterministicFiniteAutomaton {
     ///
     /// * `_start` - L'état initial de l'automate
     /// * `_delta` - Une HashMap decrivant les differentes transition de l'automate
-    /// * `_fsm` - Une machine à état fini dérivant l'automate
+    /// * `_fsm` - Une machine à état fini décrivant l'automate
     ///
     /// # Examples
     /// 
@@ -284,6 +285,8 @@ impl DeterministicFiniteAutomaton {
     pub fn apply_delta(&self,transition : Transition<State>) -> Option<&State>{
         self.get_delta().get(&transition).clone()
     }
+
+    /// indique si un mot est accepté dans la langue de l'automate
     pub fn accept(&self, _word : &str) -> bool {
         let mut symbol : Symbol;
         let mut state : State = self.get_start().clone();//etat de depart
