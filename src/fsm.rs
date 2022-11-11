@@ -117,19 +117,19 @@ impl FiniteStateMachine {
         let mut alphabet: HashSet<Symbol> = HashSet::new();
         let mut symbol: Symbol;
         for elem in content_json.get("alphabet").unwrap().as_array().unwrap(){
-            symbol = Symbol::new(elem.to_string()); //Création du symbol
+            symbol = Symbol::new(elem.to_string().replace("\"", "")); //Création du symbol
             alphabet.insert(symbol);//ajout du symbol 
         }
         let mut state: State;
         let mut states: HashSet<State> = HashSet::new();
         for elem in content_json.get("states").unwrap().as_array().unwrap(){
-            state = State::new(elem.to_string());
+            state = State::new(elem.to_string().replace("\"", ""));
             states.insert(state);
         }
         
         let mut ends: HashSet<State> = HashSet::new();
         for elem in content_json.get("ends").unwrap().as_array().unwrap(){
-            state = State::new(elem.to_string());
+            state = State::new(elem.to_string().replace("\"", ""));
             ends.insert(state);
         }
 

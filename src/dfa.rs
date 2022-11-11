@@ -145,7 +145,7 @@ impl DeterministicFiniteAutomaton {
     /// 
     pub fn from_json(content_json: &Map<String, Value>) -> Self {
         //creation de la machine à l'aide du content_json
-        let state_init :State = State::new(content_json.get("start").unwrap().to_string());
+        let state_init :State = State::new(content_json.get("start").unwrap().to_string().replace("\"", ""));
         let mut symbol: Symbol;
         let mut state: State;
         let mut image: State;
@@ -158,9 +158,9 @@ impl DeterministicFiniteAutomaton {
         let mut transition_json: &Map<String, Value>;
         for element_delta in content_json.get("delta").unwrap().as_array().unwrap(){
             transition_json = element_delta.as_object().unwrap();
-            symbol = Symbol::new(transition_json.get("symbol").unwrap().to_string());
-            state = State::new(transition_json.get("state").unwrap().to_string());
-            image = State::new(transition_json.get("image").unwrap().to_string());
+            symbol = Symbol::new(transition_json.get("symbol").unwrap().to_string().replace("\"", ""));
+            state = State::new(transition_json.get("state").unwrap().to_string().replace("\"", ""));
+            image = State::new(transition_json.get("image").unwrap().to_string().replace("\"", ""));
             transition = Transition::new(symbol.clone(), state.clone()); //création de la transition: sur l'etat state, la lecture de state par symbol mene à image
             delta.insert(transition, image.clone());
             //a chaque ajoute le symbole dans l'alphabet et les etatsalphabet.insert(symbol);
@@ -172,7 +172,7 @@ impl DeterministicFiniteAutomaton {
         
         let mut ends: HashSet<State> = HashSet::new();
         for elem in content_json.get("ends").unwrap().as_array().unwrap(){
-            state = State::new(elem.to_string());
+            state = State::new(elem.to_string().replace("\"", ""));
             ends.insert(state);
         }
         
@@ -280,7 +280,29 @@ impl DeterministicFiniteAutomaton {
     pub fn get_ends(&self) -> &HashSet<State> {
         &self.fsm.get_ends()
     }
+    
+    pub fn apply_delta(&self,transition : Transition<State>) -> Option<&State>{
+        self.get_delta().get(&transition).clone()
+    }
+    pub fn accept(&self, _word : &str) -> bool {
+        let mut symbol : Symbol;
+        let mut state : State = self.get_start().clone();//etat de depart
+        let mut transition : Transition<State>;
+        for lettre in _word.chars() {
+            symbol = Symbol::new(String::from(lettre));
+            transition = Transition::new(symbol, state.clone());
+            //execution de delta pour reccuperer l'image
+            state = if let Some(image) = self.apply_delta(transition){
+                image.clone()
+            }else {
+                return false;
+            }
+        }
+        //si l'etat est dans la liste des etats finaux 
+        self.get_ends().contains(&state)
+    }
 }
+
 
 #[cfg(test)]
 mod test {
@@ -309,6 +331,8 @@ mod test {
         assert_eq!(dfa3.get_states().clone(), dfa.get_states().clone());
         assert_eq!(dfa3.get_ends().clone(), dfa.get_ends().clone());
         assert_eq!(dfa3.get_alphabet().clone(), dfa.get_alphabet().clone());
-        //dbg!(dfa);
+        
+        assert_eq!(dfa.accept("aaab"), false);
+        assert_eq!(dfa.accept("abab"), true);
     }
 }
