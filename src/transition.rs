@@ -1,12 +1,11 @@
 use super::Symbol;
 
 //string n'implemente pas copy, donc on peut juste utiliser clone
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Eq, Hash)]
 pub struct Transition<T: Clone> {
     symbol: Symbol,
     content: T
 }
-
 
 impl<T: Clone> Transition<T> {
     /// Créer une Transition
@@ -116,6 +115,18 @@ impl<T: Clone> Transition<T> {
     }
 }
 
+impl<T> PartialEq for Transition<T>
+    where
+        T: PartialEq,
+        T: Clone
+    {
+    fn eq(&self, other: &Self) -> bool {
+        self.get_symbol() == other.get_symbol() && self.get_content() == other.get_content()
+    }
+    fn ne(&self, other: &Self) -> bool {
+        self.get_symbol() != other.get_symbol() || self.get_content() != other.get_content()
+    }
+}
 
 #[cfg(test)]
 mod test {

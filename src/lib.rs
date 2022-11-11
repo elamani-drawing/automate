@@ -6,3 +6,5 @@ mod transition;
 pub use transition::Transition;
 mod fsm;
 pub use fsm::FiniteStateMachine;
+mod dfa;
+pub use dfa::DeterministicFiniteAutomaton;

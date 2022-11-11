@@ -17,7 +17,9 @@ impl FiniteStateMachine {
     /// 
     /// # Arguments
     ///
-    /// * `_value` - Le symbole de Self
+    /// * `_states` - Un états de la machine
+    /// * `_alphabet` - L'alphabet de la machine
+    /// * `_ends` - Les états finaux de la machine
     ///
     /// # Examples
     /// 
@@ -36,6 +38,7 @@ impl FiniteStateMachine {
     /// 
     /// ```
     /// use automate::*;
+    /// use std::fs;
     /// use serde_json::{Value, from_str, map::Map};
     /// fn main() {
     ///     let link_file: &str = "src/automates/DFA1.json";
@@ -89,6 +92,7 @@ impl FiniteStateMachine {
     /// 
     /// ```
     /// use automate::*;
+    /// use std::fs;
     /// use serde_json::{Value, from_str, map::Map};
     /// fn main() {
     ///     let link_file: &str = "src/automates/DFA1.json";
@@ -159,6 +163,7 @@ impl FiniteStateMachine {
     /// 
     /// ```
     /// use automate::*;
+    /// use std::fs;
     /// use serde_json::{Value, from_str, map::Map};
     /// fn main() {
     ///     let link_file: &str = "src/automates/DFA1.json";
@@ -224,6 +229,6 @@ mod test {
         assert_eq!(fsm.get_states().clone(), fsm3.get_states().clone());
         assert_eq!(fsm.get_ends().clone(), fsm3.get_ends().clone());
         assert_eq!(fsm.get_alphabet().clone(), fsm3.get_alphabet().clone());
-        
+        //dbg!(fsm);
     }
 }
