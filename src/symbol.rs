@@ -1,6 +1,6 @@
 use std::str::FromStr;
 //string n'implemente pas copy, donc on peut juste utiliser clone
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Eq, Hash)]
 pub struct Symbol {
     value: String,
 }

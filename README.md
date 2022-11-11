@@ -1,6 +1,6 @@
 # AUTOMATE
 
-### Description
+## Description
 Implémentation d'automate en Rust.      
 Actuellement:       
 - **State**: Un état de l'automate.
@@ -8,11 +8,11 @@ Actuellement:
 - **Transition**:  Une transition de l'automate.
 
 
-### Démarage
+## Démarage
 
 1. Lancer/Construire le programme: `cargo run` ou `cargo build`
 2. Générer la doc: `cargo doc`
-3. Tous les tests ou un test précis: `cargo test` ou `cargo test transition.rs`
+3. Tous les tests ou un test précis: `cargo test` ou `cargo test nom_du_fichier.rs`
 
 ## License
 
